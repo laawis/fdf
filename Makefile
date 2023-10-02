@@ -52,9 +52,9 @@ $(DIR_BUILD):
 $(MLX):
 	$(MAKE) -C $(DIR_MLX)
 
-
 clean:
-	$(RM) $(OBJ)
+	$(RM) -r $(DIR_BUILD)
+	$(MAKE) -C $(DIR_MLX) clean 
 
 fclean:	clean
 	$(RM) $(NAME)
@@ -73,6 +73,7 @@ re:	fclean
 # -C (option de make) precise le chemin pour executer un autre makefile
 # -L (option compilateur)precise le dossier vers lequel se trouve la lib
 # -l (compilateur)precise le nom de la lib a inclure ex: ft pour libft
+# $(RM) == rm -f (option du shell): $(RM) -r == remove recursif force pour plusieurs fichiers ou dossiers inside
 # Target -> Date         Dependance -> Date
 #stack_instructions.o: src/stack_instructions.c
 #	$(CC) $(CFLAGS) src/stack_instructions.c -c -I include/
