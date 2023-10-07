@@ -51,7 +51,7 @@ $(DIR_BUILD):
 
 $(MLX):
 	$(MAKE) -C $(DIR_MLX)
-
+	
 clean:
 	$(RM) -r $(DIR_BUILD)
 	$(MAKE) -C $(DIR_MLX) clean 
