@@ -6,7 +6,7 @@
 /*   By: gaollier <gaollier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 11:43:01 by gaollier          #+#    #+#             */
-/*   Updated: 2023/10/07 15:42:18 by gaollier         ###   ########.fr       */
+/*   Updated: 2023/10/09 14:18:13 by gaollier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 #include "fdf.h"
 #include "libft.h"
-
 
 // gcc main.c -I minilibx_macos -L minilibx_macos -l mlx -framework OpenGL -framework AppKit
 
@@ -28,14 +27,6 @@
 - Matrice 3x3 et 4x4
 - Algorithme de brensham (tracer des lignes)
 */
-
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
 
 /*
 void	line(t_data *data, t_vertex *vertex1, t_vertex *vertex2)
@@ -120,28 +111,38 @@ type(matrix_vertex) -> t_vertex **
 
 */
 
-char ***get_matrix_altitude(char *map, size_t nb_line)
+char	***fill_matrix(char ***matrix_altitude, char *map, size_t nb_line)
 {
-	char	***matrix;
 	char	*line;
 	int		fd;
 	size_t	i;
 
-	matrix = (char ***)malloc(sizeof(char**) * nb_line);
-	if (matrix == NULL)
-		return (NULL);
-	// mettre dans une fonction fill_matrix
+	i = 0;
 	fd = open(map, O_RDONLY);
-	line = get_next_line(fd);
-	while (line != NULL)
+	while (i < nb_line)
 	{
-		matrix[i] = ft_split(line, ' ');
-		free(line);
 		line = get_next_line(fd);
+		matrix_altitude[i] = ft_split(line, ' ');
+		free(line);
 		i++;
 	}
+//	if (close(fd) == -1)
+//		return (NULL); est-ce que ça marche avec NULL ??? (normalement -1)
+	return (matrix_altitude);
+}
+
+char ***get_matrix_altitude(char *map, size_t nb_line)
+{
+	char	***matrix_altitude;
+	size_t	i;
+
+	matrix_altitude = (char ***)malloc(sizeof(char**) * nb_line);
+	if (matrix_altitude == NULL)
+		return (NULL);
+	// mettre dans une fonction fill_matrix
+	matrix_altitude = fill_matrix(matrix_altitude, map, nb_line);
 	//
-	return (matrix);
+	return ();
 }
 
 ssize_t	get_line_number(char *map)
@@ -153,7 +154,7 @@ ssize_t	get_line_number(char *map)
 	if (fd == -1)
 		return (-1);
 	line = get_next_line(fd);
-	x = 0;
+	x = 1;
 	while (line != NULL)
 	{
 		free(line);
@@ -176,6 +177,7 @@ int	main(int argc, char **argv)
 	char	***matrix;
 
 	line_nbr = get_line_number(argv[1]);
+
 	matrix = get_matrix_altitude(argv[1], line_nbr);
 
 
