@@ -6,7 +6,7 @@
 /*   By: gaollier <gaollier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 11:43:01 by gaollier          #+#    #+#             */
-/*   Updated: 2023/10/09 14:18:13 by gaollier         ###   ########.fr       */
+/*   Updated: 2023/10/09 16:54:31 by gaollier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ char ***get_matrix_altitude(char *map, size_t nb_line)
 	// mettre dans une fonction fill_matrix
 	matrix_altitude = fill_matrix(matrix_altitude, map, nb_line);
 	//
-	return ();
+	return (matrix_altitude);
 }
 
 ssize_t	get_line_number(char *map)

@@ -6,7 +6,7 @@
 /*   By: gaollier <gaollier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 11:43:47 by gaollier          #+#    #+#             */
-/*   Updated: 2023/10/03 15:00:35 by gaollier         ###   ########.fr       */
+/*   Updated: 2023/10/09 16:49:18 by gaollier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # define HEIGHT	500
 # define WIDTH	500
 
+#include <stdint.h>
+
 typedef struct	s_data {
 	void	*img;
 	char	*addr;
@@ -23,6 +25,8 @@ typedef struct	s_data {
 	int		line_length;
 	int		endian;
 }				t_data;
+
+typedef unsigned int uint;
 
 struct s_vertex
 {
