@@ -6,7 +6,7 @@
 /*   By: gaollier <gaollier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 11:43:01 by gaollier          #+#    #+#             */
-/*   Updated: 2023/10/09 16:54:31 by gaollier         ###   ########.fr       */
+/*   Updated: 2023/10/10 22:26:47 by gaollier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,60 +110,128 @@ matrix_vertex =
 type(matrix_vertex) -> t_vertex **
 
 */
+// STRING ARRAY =  TABLEAU DE TABLEAU = TABLEAU DE CHAINES DE CARACTERES.
+/*
 
-char	***fill_matrix(char ***matrix_altitude, char *map, size_t nb_line)
+
+---- ft_split ----
+
+string_array = malloc((n + 1) * sizeof(char *));
+
+for (i < n)
+{
+	len = get_wordlen();
+	string_array[i] = malloc((len + 1) * sizeof(char));
+}
+                         string_array[i]          string_array[i][j]
+string_array --->   | string_array[0] -->	| 'l' (string_array[0][0])
+					|						| 'o' (string_array[0][1])
+					|						| 'l' (string_array[0][2])
+					|						| '\0'
+					|
+					| string_array[1] -->	| 'n' (string_array[1][0])
+					|						| 'o' (string_array[1][1])
+					|						| 'n'
+					|						| '\0'
+					| ...
+					| NULL
+
+------------------
+
+string_array = {
+	{"Bonjour"},
+	{"Monsieur"},
+	{"Au revoir"},
+	{NULL}
+}
+*/
+
+void	free_strings(char **string_array)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (string_array[i] != NULL)
+	{
+		free(string_array[i]);
+		i++;
+	}
+}
+void	free_matrix_altitude(char ***matrix_altitude)
+{
+	size_t	i;
+
+	i = 0;
+	while (matrix_altitude[i] != NULL)
+	{
+		free_strings(matrix_altitude[i]);
+		i++;
+	}
+	free(matrix_altitude);
+}
+
+char	***fill_matrix(char ***matrix_altitude, const char *const filename)
 {
 	char	*line;
 	int		fd;
 	size_t	i;
 
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (NULL);
+	line = get_next_line(fd);
 	i = 0;
-	fd = open(map, O_RDONLY);
-	while (i < nb_line)
+	while (line != NULL)
 	{
-		line = get_next_line(fd);
 		matrix_altitude[i] = ft_split(line, ' ');
+		if (matrix_altitude[i] == NULL)
+		{
+			free_matrix(matrix_altitude);
+			return (NULL);
+		}
 		free(line);
+		line = get_next_line(fd);
 		i++;
 	}
-//	if (close(fd) == -1)
-//		return (NULL); est-ce que ça marche avec NULL ??? (normalement -1)
+	if (close(fd) == -1)
+		return (NULL); //est-ce que ça marche avec NULL ??? (normalement -1)
 	return (matrix_altitude);
 }
 
-char ***get_matrix_altitude(char *map, size_t nb_line)
+char ***get_matrix_altitude(const char *const filename, const size_t nb_line)
 {
 	char	***matrix_altitude;
 	size_t	i;
 
-	matrix_altitude = (char ***)malloc(sizeof(char**) * nb_line);
+	matrix_altitude = (char ***)malloc(sizeof(char**) * (nb_line + 1));
 	if (matrix_altitude == NULL)
 		return (NULL);
 	// mettre dans une fonction fill_matrix
-	matrix_altitude = fill_matrix(matrix_altitude, map, nb_line);
+	matrix_altitude = fill_matrix(matrix_altitude, filename);
 	//
 	return (matrix_altitude);
 }
 
-ssize_t	get_line_number(char *map)
+ssize_t	get_line_number(char *filename)
 {
-	const int	fd = open(map, O_RDONLY);
-	size_t		x;
+	const int	fd = open(filename, O_RDONLY);
+	size_t		nb_line;
 	char		*line;
 
 	if (fd == -1)
 		return (-1);
 	line = get_next_line(fd);
-	x = 1;
+	nb_line = 0;
 	while (line != NULL)
 	{
 		free(line);
 		line = get_next_line(fd);
-		x++;
+		nb_line++;
 	}
-	if (close(fd) == -1)
+	if (close(fd) == -1);
 		return (-1);
-	return (x);
+	return (nb_line);
 }
 
 int	main(int argc, char **argv)
@@ -177,9 +245,8 @@ int	main(int argc, char **argv)
 	char	***matrix;
 
 	line_nbr = get_line_number(argv[1]);
-
-	matrix = get_matrix_altitude(argv[1], line_nbr);
-
+	if (line_nbr != -1)
+		matrix = get_matrix_altitude(argv[1], line_nbr);
 
 	// init_vertex(&vertex1, 14, 1, 0, 0x00FFFFFF);
 	// init_vertex(&vertex2, 9, 2, 0, )
@@ -246,7 +313,7 @@ ft_split(lines[0], ' ') -> ["0", "1", "0", "20"]
 ft_split(lines[1], ' ') -> ["0", "1", "0", "-3"]
 
 ensuite
-
+MATRIX_ALTITUDE FINI
 matrix_altitude = [
 	["0", "1", "0", "20"],
 	["0", "1", "0", "-3"],
