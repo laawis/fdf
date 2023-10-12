@@ -1,6 +1,8 @@
 # Moi
 .DS_Store
 fdf
+.vscode
+
 # Prerequisites
 *.d
 

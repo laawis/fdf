@@ -6,7 +6,7 @@
 /*   By: gaollier <gaollier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 11:43:01 by gaollier          #+#    #+#             */
-/*   Updated: 2023/10/10 22:26:47 by gaollier         ###   ########.fr       */
+/*   Updated: 2023/10/11 22:36:03 by gaollier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,6 @@ string_array = {
 void	free_strings(char **string_array)
 {
 	size_t	i;
-	size_t	j;
 
 	i = 0;
 	while (string_array[i] != NULL)
@@ -187,7 +186,7 @@ char	***fill_matrix(char ***matrix_altitude, const char *const filename)
 		matrix_altitude[i] = ft_split(line, ' ');
 		if (matrix_altitude[i] == NULL)
 		{
-			free_matrix(matrix_altitude);
+			free_matrix_altitude(matrix_altitude);
 			return (NULL);
 		}
 		free(line);
@@ -195,21 +194,41 @@ char	***fill_matrix(char ***matrix_altitude, const char *const filename)
 		i++;
 	}
 	if (close(fd) == -1)
-		return (NULL); //est-ce que ça marche avec NULL ??? (normalement -1)
+		return (NULL);
 	return (matrix_altitude);
 }
 
 char ***get_matrix_altitude(const char *const filename, const size_t nb_line)
 {
 	char	***matrix_altitude;
-	size_t	i;
+// Lorsque tu dereference 3fois un triple pointeur de char la variable devient un char
+	// size_t	i;
+	// size_t	j;
+//	size_t	k;
 
 	matrix_altitude = (char ***)malloc(sizeof(char**) * (nb_line + 1));
 	if (matrix_altitude == NULL)
 		return (NULL);
-	// mettre dans une fonction fill_matrix
 	matrix_altitude = fill_matrix(matrix_altitude, filename);
-	//
+	if (matrix_altitude == NULL)
+		return (NULL);
+	// i = 0;
+	// while (matrix_altitude[i] != NULL)
+	// {
+	// 	j = 0;
+	// 	while (matrix_altitude[i][j] != NULL)
+	// 	{
+	// 		printf("%s", matrix_altitude[i][j]); // plus simple
+	// 		// k = 0;
+	// 		// while (matrix_altitude[i][j][k] != '\0')
+	// 		// {
+	// 		// 	k++;
+	// 		// }
+	// 		// write(1, **matrix_altitude, k);
+	// 		j++;
+	// 	}
+	// 	i++;
+	// }
 	return (matrix_altitude);
 }
 
@@ -229,7 +248,7 @@ ssize_t	get_line_number(char *filename)
 		line = get_next_line(fd);
 		nb_line++;
 	}
-	if (close(fd) == -1);
+	if (close(fd) == -1)
 		return (-1);
 	return (nb_line);
 }
@@ -241,13 +260,14 @@ int	main(int argc, char **argv)
     // t_data		img;
 	// t_vertex	vertex1;
 	// t_vertex	vertex2;
-	size_t	line_nbr;
+	ssize_t	line_nbr;
 	char	***matrix;
 
+	(void)argc;
 	line_nbr = get_line_number(argv[1]);
 	if (line_nbr != -1)
 		matrix = get_matrix_altitude(argv[1], line_nbr);
-
+	(void)matrix;
 	// init_vertex(&vertex1, 14, 1, 0, 0x00FFFFFF);
 	// init_vertex(&vertex2, 9, 2, 0, )
 	// mlx = mlx_init();
