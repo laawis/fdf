@@ -11,6 +11,9 @@ NAME = fdf
 DIR_SRC = src/
 
 LIST_SRC += main.c
+LIST_SRC += readnstore_elements.c
+LIST_SRC += free_fcts.c
+LIST_SRC += displays.c
 
 vpath %.c $(DIR_SRC)
 

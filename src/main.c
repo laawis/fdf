@@ -6,7 +6,7 @@
 /*   By: gaollier <gaollier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 11:43:01 by gaollier          #+#    #+#             */
-/*   Updated: 2023/10/12 14:39:25 by gaollier         ###   ########.fr       */
+/*   Updated: 2023/10/12 23:12:31 by gaollier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ string_array = {
 	{NULL}
 }
 */
-
+/*
 void	free_strings(char **string_array)
 {
 	size_t	i;
@@ -170,7 +170,7 @@ void	free_matrix_altitude(char ***matrix_altitude)
 	free(matrix_altitude);
 }
 
-static void	rm_newline(char *const line)
+static void	rm_newline_char_instring(char *const line)
 {
 	const size_t	len = ft_strlen(line);
 
@@ -178,11 +178,11 @@ static void	rm_newline(char *const line)
 		line[len - 1] = '\0';
 }
 
-/*
+
 	10 -1\n -> [10], [-1\n] -> [10], [-1]
 	3 42\n -> [3], [42\n] -> [3], [42]
 	1 4\n -> [1], [4\n] -> [1], [4]
-*/
+
 
 char	***fill_matrix(char ***matrix_altitude, const char *const filename)
 {
@@ -267,7 +267,7 @@ ssize_t	get_line_number(char *filename)
 		return (-1);
 	return (nb_line);
 }
-
+*/
 int	main(int argc, char **argv)
 {
 	// void		*mlx;
@@ -279,9 +279,10 @@ int	main(int argc, char **argv)
 	char	***matrix;
 
 	(void)argc;
+
 	line_nbr = get_line_number(argv[1]);
-	if (line_nbr != -1)
-		matrix = get_matrix_altitude(argv[1], line_nbr);
+	matrix = get_matrix_altitude(argv[1], line_nbr);
+	print_matrix_altitude(matrix);
 	(void)matrix;
 	// init_vertex(&vertex1, 14, 1, 0, 0x00FFFFFF);
 	// init_vertex(&vertex2, 9, 2, 0, )
