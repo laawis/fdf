@@ -37,7 +37,7 @@ LIST_HEADER += fdf.h
 LIST_HEADER += libft.h
 LIST_HEADER += ft_printf.h
 LIST_HEADER += gnl.h
-LIST_HEADER += mlh.h
+LIST_HEADER += mlx.h
 
 # variable notee en bleu
 
