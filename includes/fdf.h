@@ -6,7 +6,7 @@
 /*   By: gaollier <gaollier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 11:43:47 by gaollier          #+#    #+#             */
-/*   Updated: 2023/10/13 01:00:08 by gaollier         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:52:15 by gaollier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ char	***get_matrix_altitude(const char *const filename, const size_t nb_line);
 int		get_line_number(char *const filename);
 void	free_strings(char **string_array);
 void	free_matrix_altitude(char ***matrix_altitude);
+void	draw_point(const t_data *const data, const t_vertex *const vertex);
 
 #endif

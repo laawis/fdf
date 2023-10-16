@@ -8,12 +8,15 @@ NAME = fdf
 ### SOURCES ###
 ###############
 
-DIR_SRC = src/
+DIR_SRC += src/
+DIR_SRC += src/vertex/
 
 LIST_SRC += main.c
-LIST_SRC += readnstore_elements.c
-LIST_SRC += free_fcts.c
+LIST_SRC +=	readnstore_elements.c
+LIST_SRC +=	free_fcts.c
 LIST_SRC += displays.c
+
+# LIST_SRC += draw_point.c
 
 vpath %.c $(DIR_SRC)
 
@@ -23,7 +26,7 @@ vpath %.c $(DIR_SRC)
 
 DIR_BUILD = .build/
 
-LIST_OBJ = $(LIST_SRC:.c=.o)
+# LIST_OBJ = $(LIST_SRC:.c=.o)
 
 OBJ = $(patsubst %.c, $(DIR_BUILD)/%.o, $(LIST_SRC))
 
@@ -95,7 +98,7 @@ $(NAME): $(DIR_BUILD) $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(MLX) $(LIBFT) -framework OpenGL -framework AppKit
 # -l enleve le lib (prefix) et le .a (suffix)
 
-$(DIR_BUILD)%.o: $(DIR_SRC)%.c $(HEADER)
+$(OBJ): $(DIR_BUILD)/%.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) $< -c $(INCLUDES_LIB) -o $@
 
 $(DIR_BUILD):
