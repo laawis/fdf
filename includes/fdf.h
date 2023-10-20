@@ -6,18 +6,23 @@
 /*   By: gaollier <gaollier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 11:43:47 by gaollier          #+#    #+#             */
-/*   Updated: 2023/10/16 13:52:15 by gaollier         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:43:00 by gaollier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# define HEIGHT	500
-# define WIDTH	500
+# include <limits.h>
+# include <stdint.h>
+# include <stdio.h>
+# include <libft.h>
 
-#include <stdint.h>
-#include <libft.h>
+# define WINDOW_HEIGHT	1200
+# define WINDOW_WIDTH	1600
+
+# define MAP_HEIGHT_LIMIT	INT_MAX
+# define MAP_WIDTH_LIMIT INT_MAX
 
 typedef struct	s_data {
 	void	*img;
@@ -29,22 +34,27 @@ typedef struct	s_data {
 
 typedef unsigned int uint;
 
-struct s_vertex
+struct	s_vertex
 {
-	int x;
-	int y;
-	int w;
-	uint color;
+	int		x;
+	int		y;
+	int		w;
+	uint	color;
 };
-typedef struct s_vertex t_vertex;
+typedef struct	s_vertex t_vertex;
 
-int		main(int argc, char **argv);
-void	print_matrix_altitude(char ***const matrix_altitude);
-char	***fill_matrix(char ***matrix_altitude, const char *const filename);
-char	***get_matrix_altitude(const char *const filename, const size_t nb_line);
-int		get_line_number(char *const filename);
-void	free_strings(char **string_array);
-void	free_matrix_altitude(char ***matrix_altitude);
-void	draw_point(const t_data *const data, const t_vertex *const vertex);
+int			main(int argc, char **argv);
+void		print_matrix_altitude(char ***const matrix_altitude);
+char		***fillstring_matrix(char ***matrix_altitude, const char *const filename);
+char		***get_matrix_altitude(const char *const filename, const size_t nb_line);
+ssize_t		get_line_number(char *const filename);
+void		free_strings(char **string_array);
+void		free_vertex_matrix(t_vertex **vertex_matrix, size_t height);
+void		free_matrix_altitude(char ***matrix_altitude);
+void		draw_point(const t_data *const data, const t_vertex *const vertex);
+ssize_t		get_width(char ***matrix_altitude);
+t_vertex	**alloc_vertex_matrix(size_t width, size_t height);
+t_vertex	**fill_vertex_matrix(t_vertex **vertex_matrix, char ***string_matrix);
+void		print_vertex_matrix(t_vertex **const vertex_matrix, size_t width, size_t height);
 
 #endif

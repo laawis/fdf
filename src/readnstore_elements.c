@@ -12,17 +12,18 @@ static void	rm_newline_char_instring(char *const line)
 	if (len > 0 && line[len - 1] == '\n')
 		line[len - 1] = '\0';
 }
-
-char	***fill_matrix(char ***matrix_altitude, const char *const filename)
+char	***fillstring_matrix(char ***matrix_altitude, const char *const filename)
 {
-	char	*line;
-	int		fd;
-	size_t	i;
+	const int	fd = open(filename, O_RDONLY);
+	// on doit initialise un const en meme temps que ça declaration
+	char		*line;
+	size_t		i;
 
-	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (NULL);
 	line = get_next_line(fd);
+	if (line == NULL)
+		return (NULL);
 	i = 0;
 	while (line != NULL)
 	{
@@ -37,6 +38,7 @@ char	***fill_matrix(char ***matrix_altitude, const char *const filename)
 		line = get_next_line(fd);
 		i++;
 	}
+	matrix_altitude[i] = NULL;
 	if (close(fd) == -1)
 		return (NULL);
 	return (matrix_altitude);
@@ -50,29 +52,31 @@ char ***get_matrix_altitude(const char *const filename, const size_t nb_line)
 	matrix_altitude = (char ***)malloc(sizeof(char**) * (nb_line + 1));
 	if (matrix_altitude == NULL)
 		return (NULL);
-	matrix_altitude = fill_matrix(matrix_altitude, filename);
+	matrix_altitude = fillstring_matrix(matrix_altitude, filename);
 	if (matrix_altitude == NULL)
 		return (NULL);
 	return (matrix_altitude);
 }
 
-int	get_line_number(char *const filename)
+ssize_t	get_line_number(char *const filename)
 {
 	const int	fd = open(filename, O_RDONLY);
-	size_t		nb_line;
+	ssize_t		nb_line;
 	char		*line;
 
 	if (fd == -1)
 		return (-1);
 	line = get_next_line(fd);
+	if (line == NULL)
+		return (-1);
 	nb_line = 0;
-	while (line != NULL)
+	while (line != NULL && nb_line < MAP_HEIGHT_LIMIT)
 	{
 		free(line);
 		line = get_next_line(fd);
 		nb_line++;
 	}
-	if (close(fd) == -1)
+	if (close(fd) == -1 || nb_line > MAP_HEIGHT_LIMIT)
 		return (-1);
 	return (nb_line);
 }

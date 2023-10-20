@@ -6,7 +6,7 @@
 /*   By: gaollier <gaollier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 11:43:32 by gaollier          #+#    #+#             */
-/*   Updated: 2023/10/03 14:54:00 by gaollier         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:40:25 by gaollier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ static void	my_mlx_pixel_put(const t_data *const data, const int x, const int y,
 // 2ieme const signifie que la valeur du pointeur est constant
 void	draw_point(const t_data *const data, const t_vertex *const vertex)
 {
-	if (...)
+	if ((vertex->x <= WINDOW_WIDTH && vertex->x >= 0) && (vertex->y <= WINDOW_HEIGHT && vertex->y >= 0))
 		my_mlx_pixel_put(data, vertex->x, vertex->y, vertex->color);
 }

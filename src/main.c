@@ -6,7 +6,7 @@
 /*   By: gaollier <gaollier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 11:43:01 by gaollier          #+#    #+#             */
-/*   Updated: 2023/10/12 23:12:31 by gaollier         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:58:08 by gaollier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,186 +88,70 @@ transformation float to int :
 
 }
 */
-
 /*
-
-matrix_altitude ->
-[
-	["-1", "0", "12"],
-	["23", "0", "1"],
-	["0", "2", "42"]
-]
-
-type(matrix_altitude) -> char ***
-
-matrix_vertex =
-[
-	[{0, 0, -1}, {1, 0, 0}, {2, 0, 12}],
-	[{0, 1, 23}, {1, 1, 0}, {2, 1, 1}],
-	[{0, 2, 0}, {1, 2, 2}, {2, 2, 42}]
-]
-
-type(matrix_vertex) -> t_vertex **
-
-*/
-// STRING ARRAY =  TABLEAU DE TABLEAU = TABLEAU DE CHAINES DE CARACTERES.
-/*
-
-
----- ft_split ----
-
-string_array = malloc((n + 1) * sizeof(char *));
-
-for (i < n)
-{
-	len = get_wordlen();
-	string_array[i] = malloc((len + 1) * sizeof(char));
-}
-                         string_array[i]          string_array[i][j]
-string_array --->   | string_array[0] -->	| 'l' (string_array[0][0])
-					|						| 'o' (string_array[0][1])
-					|						| 'l' (string_array[0][2])
-					|						| '\0'
-					|
-					| string_array[1] -->	| 'n' (string_array[1][0])
-					|						| 'o' (string_array[1][1])
-					|						| 'n'
-					|						| '\0'
-					| ...
-					| NULL
-
-------------------
-
-string_array = {
-	{"Bonjour"},
-	{"Monsieur"},
-	{"Au revoir"},
-	{NULL}
-}
-*/
-/*
-void	free_strings(char **string_array)
+ssize_t	get_width(char ***matrix_altitude)
 {
 	size_t	i;
+	size_t	j;
+	ssize_t	width;
 
-	i = 0;
-	while (string_array[i] != NULL)
-	{
-		free(string_array[i]);
-		i++;
-	}
-}
-void	free_matrix_altitude(char ***matrix_altitude)
-{
-	size_t	i;
+	if (matrix_altitude == NULL)
 
+	width = 0;
 	i = 0;
 	while (matrix_altitude[i] != NULL)
 	{
-		free_strings(matrix_altitude[i]);
-		i++;
-	}
-	free(matrix_altitude);
-}
-
-static void	rm_newline_char_instring(char *const line)
-{
-	const size_t	len = ft_strlen(line);
-
-	if (len > 0 && line[len - 1] == '\n')
-		line[len - 1] = '\0';
-}
-
-
-	10 -1\n -> [10], [-1\n] -> [10], [-1]
-	3 42\n -> [3], [42\n] -> [3], [42]
-	1 4\n -> [1], [4\n] -> [1], [4]
-
-
-char	***fill_matrix(char ***matrix_altitude, const char *const filename)
-{
-	char	*line;
-	int		fd;
-	size_t	i;
-
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		return (NULL);
-	line = get_next_line(fd);
-	i = 0;
-	while (line != NULL)
-	{
-		rm_newline(line);
-		matrix_altitude[i] = ft_split(line, ' ');
-		if (matrix_altitude[i] == NULL)
+		j = 0;
+		while(matrix_altitude[i][j] != NULL)
 		{
-			free_matrix_altitude(matrix_altitude);
-			return (NULL);
+			j++
 		}
-		free(line);
-		line = get_next_line(fd);
+		if (j != width && i > 0)
+			return (-1);
+		width = j;
 		i++;
 	}
-	if (close(fd) == -1)
-		return (NULL);
-	return (matrix_altitude);
+	return (width);
 }
 
-void	print_matrix_altitude(char ***const matrix_altitude)
+t_vertex	**alloc_vertex_matrix(ssize_t width, ssize_t height)
+{
+	t_vertex	**matrix;
+	size_t		i;
+
+	matrix = (t_vertex **)malloc(sizeof(t_vertex *) * (y + 1));
+	if (matrix == NULL)
+		return (NULL);
+	i = 0;
+	while (matrix[i] != NULL)
+	{
+		matrix[i] = (t_vertex *)malloc(sizeof(t_vertex) * (x + 1))
+		i++;
+	}
+	matrix[i] = NULL;
+	return (matrix);
+}
+
+t_vertex	**fill_vertex_matrix(t_vertex **vertex_matrix, char ***string_matrix)
 {
 	size_t	i;
 	size_t	j;
 
 	i = 0;
-	while (matrix_altitude[i] != NULL)
+	while (vertex_matrix[i] != NULL)
 	{
 		j = 0;
-		while (matrix_altitude[i][j] != NULL)
+		while (vertex_matrix[i][j] != NULL)
 		{
-			printf("[%s]", matrix_altitude[i][j]); // plus simple
+			vertex_matrix->w = ft_atoi(string_matrix[i][j])
 			j++;
 		}
-		printf("\n");
 		i++;
 	}
-}
-
-char ***get_matrix_altitude(const char *const filename, const size_t nb_line)
-{
-	char	***matrix_altitude;
-// Lorsque tu dereference 3fois un triple pointeur de char la variable devient un char
-
-	matrix_altitude = (char ***)malloc(sizeof(char**) * (nb_line + 1));
-	if (matrix_altitude == NULL)
-		return (NULL);
-	matrix_altitude = fill_matrix(matrix_altitude, filename);
-	if (matrix_altitude == NULL)
-		return (NULL);
-	print_matrix_altitude(matrix_altitude);
-	return (matrix_altitude);
-}
-
-ssize_t	get_line_number(char *filename)
-{
-	const int	fd = open(filename, O_RDONLY);
-	size_t		nb_line;
-	char		*line;
-
-	if (fd == -1)
-		return (-1);
-	line = get_next_line(fd);
-	nb_line = 0;
-	while (line != NULL)
-	{
-		free(line);
-		line = get_next_line(fd);
-		nb_line++;
-	}
-	if (close(fd) == -1)
-		return (-1);
-	return (nb_line);
+	return (vertex_matrix);
 }
 */
+
 int	main(int argc, char **argv)
 {
 	// void		*mlx;
@@ -275,15 +159,33 @@ int	main(int argc, char **argv)
     // t_data		img;
 	// t_vertex	vertex1;
 	// t_vertex	vertex2;
-	ssize_t	line_nbr;
-	char	***matrix;
+	ssize_t		height;
+	ssize_t		width;
+	char		***string_matrix;
+	t_vertex	**vertex_matrix;
 
 	(void)argc;
 
-	line_nbr = get_line_number(argv[1]);
-	matrix = get_matrix_altitude(argv[1], line_nbr);
-	print_matrix_altitude(matrix);
-	(void)matrix;
+	height = get_line_number(argv[1]);
+	if (height < 0)
+		return (-1);
+	string_matrix = get_matrix_altitude(argv[1], height);
+	print_matrix_altitude(string_matrix);
+	width = get_width(string_matrix);
+	if (width < 0)
+		return (-1);
+	vertex_matrix = alloc_vertex_matrix(width, height);
+	if (vertex_matrix == NULL)
+		return -1;
+	fill_vertex_matrix(vertex_matrix, string_matrix);
+	print_vertex_matrix(vertex_matrix, width, height);
+	free_matrix_altitude(string_matrix);
+	free_vertex_matrix(vertex_matrix, height);
+	// mettre tout ca dans des belles fonctions qui donnent une t_map
+
+
+	(void)string_matrix;
+	(void)vertex_matrix;
 	// init_vertex(&vertex1, 14, 1, 0, 0x00FFFFFF);
 	// init_vertex(&vertex2, 9, 2, 0, )
 	// mlx = mlx_init();
@@ -368,3 +270,4 @@ fin (t_vertex **matrix) matrice de points <=> tableau de tableaux de points
 ]
 
 */
+

@@ -15,6 +15,7 @@ LIST_SRC += main.c
 LIST_SRC +=	readnstore_elements.c
 LIST_SRC +=	free_fcts.c
 LIST_SRC += displays.c
+LIST_SRC += matrixs_matching.c
 
 # LIST_SRC += draw_point.c
 
