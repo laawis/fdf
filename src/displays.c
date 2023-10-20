@@ -20,6 +20,7 @@ void	print_matrix_altitude(char ***const matrix_altitude)
 		ft_printf("\n");
 		i++;
 	}
+	ft_printf("\n");
 }
 
 void	print_vertex_matrix(t_vertex **const vertex_matrix, size_t width, size_t height)
@@ -33,6 +34,8 @@ void	print_vertex_matrix(t_vertex **const vertex_matrix, size_t width, size_t he
 		j = 0;
 		while (j < width)
 		{
+			//ft_printf("{%d;%d;%d}", vertex_matrix[i][j].x, vertex_matrix[i][j].y, vertex_matrix[i][j].w );
+			//printf("\n");
 			printf("{%d;%d;%d}", vertex_matrix[i][j].x, vertex_matrix[i][j].y, vertex_matrix[i][j].w );
 			if (j + 1 < width)
 				printf(",");
@@ -41,5 +44,21 @@ void	print_vertex_matrix(t_vertex **const vertex_matrix, size_t width, size_t he
 		printf("\n");
 		i++;
 	}
+	ft_printf("\n");
+	i = 0;
+	while (i < height)
+	{
+		j = 0;
+		while (j < width)
+		{
+			ft_printf("{%d;%d;%d}", vertex_matrix[i][j].x, vertex_matrix[i][j].y, vertex_matrix[i][j].w );
+			if (j + 1 < width)
+				printf(",");
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+
 	printf("\n");
 }
