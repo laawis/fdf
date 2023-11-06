@@ -70,6 +70,8 @@ t_vertex	**fill_vertex_matrix(t_vertex **vertex_matrix, char ***string_matrix)
 	return (vertex_matrix);
 }
 
+
+
 /*
 
 struct s_map

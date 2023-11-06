@@ -6,7 +6,7 @@
 /*   By: gaollier <gaollier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 11:43:01 by gaollier          #+#    #+#             */
-/*   Updated: 2023/10/20 14:58:08 by gaollier         ###   ########.fr       */
+/*   Updated: 2023/10/24 14:09:44 by gaollier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ transformation float to int :
 		Yincr = -1;
 	if (dx > dy)
 	{
-			if (dx < 0)
-				dx *= -1;
 			while (i <= dx)
 			{
 				my_mlx_pixel_put(data, x1, y1, 0x00FFFFFF);
@@ -69,8 +67,6 @@ transformation float to int :
 	}
 	if (dx < dy)
 	{
-			if (dy < 0)
-				dx *= -1;
 			while (i <= dy)
 			{
 				my_mlx_pixel_put(data, x1, y1, 0x00FFFFFF);
