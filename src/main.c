@@ -6,7 +6,7 @@
 /*   By: gaollier <gaollier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 11:43:01 by gaollier          #+#    #+#             */
-/*   Updated: 2023/10/24 14:09:44 by gaollier         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:03:07 by gaollier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,13 +153,17 @@ int	main(int argc, char **argv)
 	// void		*mlx;
     // void		*mlx_win;
     // t_data		img;
-	// t_vertex	vertex1;
-	// t_vertex	vertex2;
+	t_vertex	vertex1;
+	t_vertex	vertex2;
 	ssize_t		height;
 	ssize_t		width;
 	char		***string_matrix;
 	t_vertex	**vertex_matrix;
 
+	vertex1.x = WINDOW_WIDTH / 2;
+	vertex1.y = WINDOW_HEIGHT / 2;
+	vertex2.x = 1000;
+	vertex2.y = 1000;
 	(void)argc;
 
 	height = get_line_number(argv[1]);
@@ -178,8 +182,7 @@ int	main(int argc, char **argv)
 	free_matrix_altitude(string_matrix);
 	free_vertex_matrix(vertex_matrix, height);
 	// mettre tout ca dans des belles fonctions qui donnent une t_map
-
-
+	draw_line(data, vertex1, vertex2);
 	(void)string_matrix;
 	(void)vertex_matrix;
 	// init_vertex(&vertex1, 14, 1, 0, 0x00FFFFFF);

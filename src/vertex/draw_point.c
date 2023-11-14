@@ -6,7 +6,7 @@
 /*   By: gaollier <gaollier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 11:43:32 by gaollier          #+#    #+#             */
-/*   Updated: 2023/10/28 09:44:31 by gaollier         ###   ########.fr       */
+/*   Updated: 2023/11/13 14:54:42 by gaollier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	line(t_data *data, t_vertex *vertex1, t_vertex *vertex2)
 }
 */
 
-void	line(t_data *data, t_vertex *vertex1, t_vertex *vertex2)
+void	draw_line(t_data *data, t_vertex *vertex1, t_vertex *vertex2)
 {
 	int	ex = (vertex2->x - vertex1->x);
 	int	ey = (vertex2->y - vertex1->y);
